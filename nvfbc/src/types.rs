@@ -1,4 +1,4 @@
-use std::ffi::CStr;
+use std::ffi::{c_char, CStr};
 
 #[derive(Debug, Copy, Clone)]
 pub enum CaptureType {
@@ -124,7 +124,7 @@ impl From<nvfbc_sys::_NVFBC_GET_STATUS_PARAMS> for Status {
 			outputs.push(Output {
 				id: status.outputs[output_index as usize].dwId,
 				name: unsafe {
-					CStr::from_ptr(&status.outputs[output_index as usize].name as *const u8)
+					CStr::from_ptr(&status.outputs[output_index as usize].name as *const c_char)
 						.to_str()
 						.unwrap()
 						.to_string()
